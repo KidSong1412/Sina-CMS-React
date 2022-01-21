@@ -1,21 +1,39 @@
 import React, { Component } from 'react'
-import { Form, Input, Button } from 'antd'
+import { Form, Input, Button, message } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Navigate } from 'react-router-dom'
 import './login.less'
 import logo from '../../assets/images/logo.png'
+import { reqLogin } from '../../api'
+import memoryUtils from '../../utils/memoryUtils'
+import storageUtils from '../../utils/storageUtils'
 
 export default function Login() {
   const navigate = useNavigate()
   
-  const onFinish = (val) => {
+  const onFinish = async (val) => {
     const { username, password } = val
-    console.log(username + '和' + password)
-    navigate('/')
+    const result = await reqLogin(username, password)
+    if (result.status ===0) {
+      message.success('登陆成功')
+      const user = result.data
+      memoryUtils.user = user
+      storageUtils.saveUser(user)
+      navigate('/', {replace: true})
+    } else {
+      message.error(result.msg)
+    }
   }
 
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo)
+  }
+
+  const user = memoryUtils.user
+  if (user && user._id) {
+    console.log(user)
+    console.log(user._id)
+    return <Navigate to="/" />
   }
 
   return (
