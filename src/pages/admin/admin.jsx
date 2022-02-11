@@ -1,10 +1,12 @@
+import React from 'react'
 import { Navigate } from 'react-router-dom'
 import { Layout } from 'antd'
 import memoryUtils from '../../utils/memoryUtils'
 
 import LeftNav from '../../components/left-nav'
+import Header from '../../components/header'
 
-const { Header, Footer, Sider, Content } = Layout;
+const { Footer, Sider, Content } = Layout;
 
 export default function Admin() {
   const user = memoryUtils.user

@@ -1,3 +1,4 @@
+import React from 'react'
 import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { Menu } from 'antd'
@@ -6,6 +7,7 @@ import logo from '../../assets/images/logo.png'
 import menuList from '../../config/menuConfig'
 import './index.less'
 import { FONTSIZE_18_PX } from '../../common/common'
+import { set } from 'store'
 
 const { SubMenu } = Menu
 const IconFont = createFromIconfontCN({
@@ -17,6 +19,7 @@ const IconFont = createFromIconfontCN({
 export default function LeftNav(props) {
   const location = useLocation()
   const pathname = location.pathname
+  const openKeys = []
 
   const getMenuNodes = (menuList) => {
     return menuList.reduce((pre, item) => {
@@ -30,6 +33,7 @@ export default function LeftNav(props) {
           </Menu.Item>
         ))
       } else {
+        openKeys.push(item.key)
         pre.push((
           <SubMenu key={item.key} title={
             <span>
@@ -60,6 +64,7 @@ export default function LeftNav(props) {
         theme="dark"
         mode="inline"
         selectedKeys={[selectedKey]}
+        defaultOpenKeys={openKeys}
       >
         {menuNodes}
       </Menu>
