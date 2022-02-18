@@ -1,10 +1,11 @@
 import React from 'react'
-import { Navigate } from 'react-router-dom'
+import { Navigate, Routes, Route } from 'react-router-dom'
 import { Layout } from 'antd'
 import memoryUtils from '../../utils/memoryUtils'
 
 import LeftNav from '../../components/left-nav'
 import Header from '../../components/header'
+import Category from '../category/category'
 
 const { Footer, Sider, Content } = Layout;
 
@@ -20,8 +21,12 @@ export default function Admin() {
       </Sider>
       <Layout>
         <Header>Header</Header>
-        <Content>Content</Content>
-        <Footer>Footer</Footer>
+        <Content style={{margin: 20, backgroundColor: '#fff'}}>
+          <Routes>
+            <Route path="/products/category" element={<Category />} />
+          </Routes>
+        </Content>
+        <Footer style={{textAlign: 'center', color: '#cccccc'}}>推荐使用谷歌浏览器，可以获得更佳页面操作体验</Footer>
       </Layout>
     </Layout>
   )
