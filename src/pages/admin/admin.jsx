@@ -8,6 +8,7 @@ import Header from '../../components/header'
 import Category from '../category/category'
 import Role from '../role/role'
 import User from '../user/user'
+import Product from '../product/product'
 
 const { Footer, Sider, Content } = Layout;
 
@@ -28,6 +29,7 @@ export default function Admin() {
             <Route path="/products/category" element={<Category />} />
             <Route path="/role" element={<Role />} />
             <Route path='/user' element={<User />} />
+            <Route path="/products/product/*" element={<Product />} />
           </Routes>
         </Content>
         <Footer style={{textAlign: 'center', color: '#cccccc'}}>推荐使用谷歌浏览器，可以获得更佳页面操作体验</Footer>
