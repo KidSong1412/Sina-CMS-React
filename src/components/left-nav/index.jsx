@@ -58,7 +58,7 @@ export default function LeftNav(props) {
     <div className="left-nav">
       <Link to='/' className="left-nav-header">
         <img src={logo} alt="logo" />
-        <h1>新浪商城</h1>
+        <h1>Sina-CMS</h1>
       </Link>
       <Menu
         theme="dark"

@@ -34,7 +34,21 @@ export default function ProductHome () {
     {
       width: 100,
       title: '状态',
-      render: (product) => {}
+      render: (product) => {
+        const {status, _id} = product
+        const newStatus = status === 1 ? 2 : 1
+        return (
+          <span>
+            <Button
+              type='primary'
+              onClick={() => updateStatus(_id, newStatus)}
+            >
+              {status === 1 ? '下架' : '上架'}
+            </Button>
+            <span>{status === 1 ? '在售' : '已下架'}</span>
+          </span>
+        )
+      }
     },
     {
       width: 100,
@@ -42,7 +56,7 @@ export default function ProductHome () {
       render: (product) => {
         return (
           <span>
-            <LinkButton>详情</LinkButton>
+            <LinkButton onClick={() => navigate('/products/product/detail', {state: product})}>详情</LinkButton>
             <LinkButton onClick={() => navigate('/products/product/addupdate', {state: product})}>修改</LinkButton>
           </span>
         )
@@ -68,6 +82,14 @@ export default function ProductHome () {
       const {total, list} = result.data
       setTotal(total)
       setProducts(list)
+    }
+  }
+
+  const updateStatus = async (productId, status) => {
+    const result = await reqUpdateStatus(productId, status)
+    if (result.status === 0) {
+      message.success('商品状态更新成功')
+      getProducts(pageNum)
     }
   }
 

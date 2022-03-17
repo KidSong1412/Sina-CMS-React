@@ -13,6 +13,8 @@ export const reqCategorys = (parentId) => ajax(BASE + '/manage/category/list', {
 export const reqAddCategory = (categoryName, parentId) => ajax(BASE + '/manage/category/add', {categoryName, parentId}, 'POST')
 //更新分类
 export const reqUpdateCategory = ({categoryId, categoryName}) => ajax(BASE + '/manage/category/update', {categoryId, categoryName}, 'POST')
+//获取一个分类
+export const reqCategory = (categoryId) => ajax(BASE + '/manage/category/info', {categoryId})
 
 //获取角色列表
 export const reqRoles = () => ajax(BASE + '/manage/role/list')

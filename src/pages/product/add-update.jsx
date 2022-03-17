@@ -2,7 +2,10 @@ import React, { useState, useRef } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { Card, Form, Input, Button, message, Cascader } from 'antd'
 import PicturesWall from './pictures-wall'
+import RichTextEditor from './rich-text-editor'
+import LinkButton from '../../components/link-button'
 import { reqCategorys, reqAddOrUpdateProduct } from '../../api'
+import { LeftOutlined } from '@ant-design/icons'
 
 const {Item} = Form
 const {TextArea} = Input
@@ -89,7 +92,7 @@ export default function ProductAddUpdate () {
   })
 
   const pw = useRef()
-  console.log(product)
+  const editor = useRef()
 
   const submit = () => {
     addForm.validateFields().then( async values => {
@@ -102,7 +105,9 @@ export default function ProductAddUpdate () {
         pCategoryId = categoryIds[0]
         categoryId = categoryIds[1]
       }
-      const resProduct = { name, desc, price, pCategoryId, categoryId }
+      const imgs = pw.current.getImgs()
+      const detail = editor.current.getDetail()
+      const resProduct = { name, desc, price, imgs, detail, pCategoryId, categoryId }
       if (isUpdate) {
         resProduct._id = product._id
       }
@@ -119,7 +124,12 @@ export default function ProductAddUpdate () {
   }
 
   const title = (
-    <span>你好</span>
+    <span>
+      <LinkButton onClick={() => navigate(-1)}>
+        <LeftOutlined style={{fontSize: 20}} />
+      </LinkButton>
+      <span>{isUpdate ? '修改商品' : '添加商品'}</span>
+    </span>
   )
 
   return (
@@ -168,7 +178,9 @@ export default function ProductAddUpdate () {
         <Item label="商品图片">
            <PicturesWall ref={pw} imgs={product.imgs} /> 
         </Item>
-        <Item label="商品详情" labelCol={{span: 2}} wrapperCol={{span: 20}}></Item>
+        <Item label="商品详情" labelCol={{span: 2}} wrapperCol={{span: 20}}>
+          <RichTextEditor ref={editor} detail={product.detail} />
+        </Item>
         <Item>
           <Button type='primary' onClick={submit}>提交</Button>
         </Item>
