@@ -6,10 +6,10 @@ import AuthForm from './auth-form'
 import { formateDate } from '../../utils/dateUtils'
 import { PAGE_SIZE } from '../../utils/constants'
 import { reqRoles, reqAddRole, reqUpdateRole } from '../../api'
-import memoryUtils from '../../utils/memoryUtils'
-import storageUtils from '../../utils/storageUtils'
+import { connect } from 'react-redux'
+import {logout} from '../../redux/actions'
 
-export default function Role () {
+function Role (props) {
   const navigate = useNavigate()
   const [roles, setRoles] = useState([])
   const [role, setRole] = useState({})
@@ -78,15 +78,14 @@ export default function Role () {
     const menus = auth.current.getMenus()
     role.menus = menus
     role.auth_time = Date.now()
-    role.auth_name = memoryUtils.user.username
+    role.auth_name = props.user.username
     
     const result = await reqUpdateRole(role)
     if (result.status === 0) {
       //如果当前更新的是自己角色的权限，则强制退出
-      if (role._id === memoryUtils.user._id) {
-        memoryUtils.user = {}
-        storageUtils.removeUser()
-        navigate('/login', {replace: true})
+      if (role._id === props.user._id) {
+        props.logout()
+        message.success('当前角色权限')
       } else {
         message.success('设置角色权限成功')
         setRoles([...roles])
@@ -142,3 +141,8 @@ export default function Role () {
     </Card>
   )
 }
+
+export default connect(
+  state => ({user: state.user}),
+  {logout}
+)(Role)

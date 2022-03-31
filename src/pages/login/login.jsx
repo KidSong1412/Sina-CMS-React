@@ -4,36 +4,24 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import { useNavigate, Navigate } from 'react-router-dom'
 import './login.less'
 import logo from '../../assets/images/logo.png'
-import { reqLogin } from '../../api'
-import memoryUtils from '../../utils/memoryUtils'
-import storageUtils from '../../utils/storageUtils'
+import { connect } from 'react-redux'
+import {login} from '../../redux/actions'
 
-export default function Login() {
+function Login(props) {
   const navigate = useNavigate()
   
-  const onFinish = async (val) => {
+  const onFinish = (val) => {
     const { username, password } = val
-    const result = await reqLogin(username, password)
-    if (result.status ===0) {
-      message.success('登陆成功')
-      const user = result.data
-      memoryUtils.user = user
-      storageUtils.saveUser(user)
-      navigate('/', {replace: true})
-    } else {
-      message.error(result.msg)
-    }
+    props.login(username, password)
   }
 
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo)
   }
 
-  const user = memoryUtils.user
+  const user = props.user
   if (user && user._id) {
-    console.log(user)
-    console.log(user._id)
-    return <Navigate to="/" />
+    return <Navigate to="/home" />
   }
 
   return (
@@ -43,6 +31,7 @@ export default function Login() {
         <h1>React项目: 后台管理系统</h1>
       </header>
       <section className="login-content">
+        <div className={user.errorMsg ? 'error-msg show' : 'error-msg'}>{user.errorMsg}</div>
         <h2>用户登陆</h2>
         <Form
           className="login-form"
@@ -87,3 +76,8 @@ export default function Login() {
     </div>
   )
 }
+
+export default connect(
+  state => ({user: state.user}),
+  {login}
+)(Login)

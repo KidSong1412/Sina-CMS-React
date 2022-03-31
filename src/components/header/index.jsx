@@ -3,16 +3,14 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { Modal } from 'antd'
 import LinkButton from '../link-button'
 import { formateDate } from '../../utils/dateUtils'
-import menuList from '../../config/menuConfig'
-import storageUtils from '../../utils/storageUtils'
-import memoryUtils from '../../utils/memoryUtils'
+import { connect } from 'react-redux'
 import './index.less'
+import {logout} from '../../redux/actions'
 
-export default function Header () {
+function Header (props) {
   const location = useLocation()
   const navigate = useNavigate()
   const [currentTime, setCurrentTime] = useState(formateDate(Date.now()))
-  const [title, setTitle] = useState('首页')
 
   useEffect(() => {
     let intervalId = setInterval(() => {
@@ -24,28 +22,11 @@ export default function Header () {
     }
   }, [currentTime])
 
-  useEffect(() => {
-    const pathname = location.pathname
-    menuList.forEach(item => {
-      if (pathname === '/') {
-        setTitle('首页')
-      } else if (item.key === pathname) {
-        setTitle(item.title)
-      } else if (item.children) {
-        const cItem = item.children.find(cItem => pathname.indexOf(cItem.key) === 0)
-        if (cItem) {
-          setTitle(cItem.title)
-        }
-      }
-    })
-  }, [title])
-
   const logout = () => {
     Modal.confirm({
       content: '确定退出吗?',
       onOk: () => {
-        storageUtils.removeUser()
-        memoryUtils.user = {}
+        props.logout()
         navigate('/login', {replace: true})
       }
     })
@@ -58,7 +39,7 @@ export default function Header () {
         <LinkButton onClick={logout}>退出</LinkButton>
       </div>
       <div className="header-bottom">
-        <div className="header-bottom-left">{title}</div>
+        <div className="header-bottom-left">{props.headTitle}</div>
         <div className="header-bottom-right">
           <span>{currentTime}</span>
         </div>
@@ -66,3 +47,8 @@ export default function Header () {
     </div>
   )
 }
+
+export default connect(
+  state => ({headTitle: state.headTitle, user: state.user}),
+  {logout}
+)(Header)
