@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { Card, Button, Modal, Table, message } from 'antd'
 import AddForm from './add-form'
 import AuthForm from './auth-form'
@@ -10,7 +9,6 @@ import { connect } from 'react-redux'
 import {logout} from '../../redux/actions'
 
 function Role (props) {
-  const navigate = useNavigate()
   const [roles, setRoles] = useState([])
   const [role, setRole] = useState({})
   const [isShowAdd, setIsShowAdd] = useState(false)
@@ -39,15 +37,15 @@ function Role (props) {
   const auth = useRef()
 
   useEffect(() => {
-    getRoles()
-  }, [roles])
-  const getRoles = async () => {
-    const result = await reqRoles()
-    if (result.status === 0) {
-      const roles = result.data
-      setRoles(roles)
+    const getRoles = async () => {
+      const result = await reqRoles()
+      if (result.status === 0) {
+        const roles = result.data
+        setRoles(roles)
+      }
     }
-  }
+    getRoles()
+  }, [])
 
   const addRole = () => {
     MyAddForm.current.validateFields().then(async (value) => {

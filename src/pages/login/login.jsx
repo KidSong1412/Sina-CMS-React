@@ -5,7 +5,7 @@ import { useNavigate, Navigate } from 'react-router-dom'
 import './login.less'
 import logo from '../../assets/images/logo.png'
 import { connect } from 'react-redux'
-import {login} from '../../redux/actions'
+import { login } from '../../redux/actions'
 
 function Login(props) {
   const navigate = useNavigate()
