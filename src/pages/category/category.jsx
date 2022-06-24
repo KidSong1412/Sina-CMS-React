@@ -41,7 +41,6 @@ export default function Category () {
     setLoading(true)
     pid = pid || parentId
     const result = await reqCategorys(pid)
-    console.log(result)
     setLoading(false)
     if (result.status === 0) {
       const categorys = result.data
