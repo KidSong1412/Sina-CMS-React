@@ -1,22 +1,12 @@
 import './App.less'
-import React, { Component } from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import React from 'react'
+import RoutesMap from './routes/routes'
 
-import Login from './pages/login/login'
-import Admin from './pages/admin/admin'
 /*应用根组件
 */
-class App extends Component {
+export default function App () {
 
-  render() {
-    return (
-      <BrowserRouter>
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/*" element={<Admin />} />
-        </Routes>
-      </BrowserRouter>
-    )
-  }
+  return (
+    <RoutesMap />
+  )
 }
-export default App
