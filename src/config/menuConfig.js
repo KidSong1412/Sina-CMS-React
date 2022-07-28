@@ -58,6 +58,11 @@ const menuList = [
     title: '订单管理',
     key: '/order',
     icon: 'icon-dingdanguanli-'
+  },
+  {
+    title: '日志管理',
+    key: '/record',
+    icon: 'icon-dingdanguanli-'
   }
 ]
 

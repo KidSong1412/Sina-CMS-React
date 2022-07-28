@@ -1,0 +1,55 @@
+.home-layout-top {
+  height: 150px;
+  background: black;
+  border-radius: 20px;
+  overflow: hidden;
+  .title {
+    border-right: 2px dashed white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    .wrap {
+      min-width: 80px;
+      min-height: 80px;
+      border-radius: 50%;
+      background-color: skyblue;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .mid {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background-color: black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .ins {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          background-color: yellowgreen;
+        }
+      }
+    }
+  }
+  .chart {
+    overflow: hidden;
+  }
+}
+
+.home-layout-mid {
+  margin-top: 24px;
+  .mid-earth {
+    height: 500px;
+    canvas {
+      border-radius: 20px;
+    }
+  }
+  .mid-prod, .mid-layer {
+    background: black;
+    border-radius: 20px;
+    padding: 10px 20px;
+  }
+}

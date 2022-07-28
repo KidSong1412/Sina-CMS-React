@@ -1,9 +1,12 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import {Card} from 'antd'
 import ReactECharts from 'echarts-for-react'
 import './chart.less'
 
 export default class Pie extends Component {
+  state = {
+    timerout: null
+  }
 
   getOption1 = () => {
     return {
@@ -100,15 +103,25 @@ export default class Pie extends Component {
       ]
     }
   }
+
+  chartResize = (chartIns) => {
+    this.state.timerout = setTimeout(() => {
+      chartIns.resize()
+    }, 0)
+  }
+
+  componentWillUnmount () {
+    clearTimeout(this.state.timerout)
+  }
   
   render () {
     return (
       <div>
         <Card title='饼图一'>
-        <ReactECharts option={this.getOption1()} style={{width: '100%', height: '500px'}} />
+          <ReactECharts option={this.getOption1()} style={{width: '100%', height: '500px'}} onChartReady={this.chartResize} />
         </Card>
         <Card title='饼图二'>
-          <ReactECharts option={this.getOption2()} style={{width: '100%', height: '500px'}} />
+          <ReactECharts option={this.getOption2()} style={{width: '100%', height: '500px'}} onChartReady={this.chartResize} />
         </Card>
       </div>
     )

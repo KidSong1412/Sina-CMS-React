@@ -1,123 +1,79 @@
-import React, { useLayoutEffect } from 'react'
-import { Card } from 'antd'
-import { Scene, CityBuildingLayer, LineLayer, PolygonLayer } from '@antv/l7';
-import { GaodeMap } from '@antv/l7-maps';
+import React, { lazy, Suspense } from 'react'
+import { Card, Row, Col } from 'antd'
+import './home.less'
+import IncomeChart from '../../components/home/income-chart'
+import OrderChart from '../../components/home/order-chart'
+import TargetChart from '../../components/home/target-chart'
+import WelcomeChart from '../../components/home/welcome-chart'
+import Wait from '../../components/wati'
+import ProdIntro from '../../components/home/prod-introduction'
+import LayerChart from '../../components/home/layer-chart'
+//方案二，关于React中Echarts图表变形问题
+const EarthChart = lazy(() => import('../../components/home/earth-chart'))
 
 export default function Home() {
-  useLayoutEffect(() => {
-    const scene = new Scene({
-      id: 'map',
-      map: new GaodeMap({
-        style: 'dark',
-        center: [120.145, 30.238915],
-        pitch: 60,
-        zoom: 13.2
-      })
-    });
-    fetch(
-      'https://gw.alipayobjects.com/os/rmsportal/ggFwDClGjjvpSMBIrcEx.json'
-    ).then(async res => {
-      const pointLayer = new CityBuildingLayer();
-      pointLayer
-        .source(await res.json())
-        .size('floor', [0, 500])
-        .color('rgba(242,246,250,1.0)')
-        .animate({
-          enable: true
-        })
-        .active({
-          color: '#0ff',
-          mix: 0.5
-        })
-        .style({
-          opacity: 0.7,
-          baseColor: 'rgb(16, 16, 16)',
-          windowColor: 'rgb(30, 60, 89)',
-          brightColor: 'rgb(255, 176, 38)',
-          sweep: {
-            enable: true,
-            sweepRadius: 2,
-            sweepColor: '#1990FF',
-            sweepSpeed: 0.5,
-            sweepCenter: [120.145319, 30.238915]
-          }
-        });
-      scene.addLayer(pointLayer);
-    });
 
-    fetch(
-      'https://gw.alipayobjects.com/os/bmw-prod/67130c6c-7f49-4680-915c-54e69730861d.json'
-    )
-      .then(data => data.json())
-      .then(
-        ({
-          lakeBorderData,
-          lakeData,
-          landData
-        }) => {
-          const lakeLayer = new PolygonLayer()
-            .source(lakeData)
-            .shape('fill')
-            .color('#1E90FF')
-            .style({
-              opacity: 0.4,
-              opacityLinear: {
-                enable: true,
-                dir: 'out' // in - out
-              }
-            });
-          const landLayer = new PolygonLayer()
-            .source(landData)
-            .shape('fill')
-            .color('#3CB371')
-            .style({
-              opacity: 0.4,
-              opacityLinear: {
-                enable: true,
-                dir: 'in' // in - out
-              }
-            });
-
-          const lakeBorderLayer = new PolygonLayer()
-            .source(lakeBorderData)
-            .shape('fill')
-            .color('#ccc')
-            .style({
-              opacity: 0.5,
-              opacityLinear: {
-                enable: true,
-                dir: 'in' // in - out
-              }
-            });
-
-          scene.addLayer(lakeLayer);
-          scene.addLayer(lakeBorderLayer);
-          scene.addLayer(landLayer);
-        }
-      );
-
-    fetch(
-      'https://gw.alipayobjects.com/os/basement_prod/40ef2173-df66-4154-a8c0-785e93a5f18e.json'
-    )
-      .then(res => res.json())
-      .then(data => {
-        const layer = new LineLayer({
-          zIndex: 0
-        })
-          .source(data)
-          .size(1)
-          .shape('line')
-          .color('#1990FF')
-          .animate({
-            interval: 1, // 间隔
-            duration: 2, // 持续时间，延时
-            trailLength: 2 // 流线长度
-          });
-        scene.addLayer(layer);
-      });
-  }, [])
-
+  const titleCircularDouble = (
+    <div className='wrap'>
+      <div className='mid'>
+        <div className='ins'></div>
+      </div>
+    </div>
+  )
   return (
-    <Card id="map" style={{ height: '700px', overflow: 'hidden' }}></Card>
+    <Card bordered={false}>
+      <Row gutter={20}>
+        <Col span={6}>
+          <Row className='home-layout-top'>
+            <Col className='title' span={6}>
+              {titleCircularDouble}
+            </Col>
+            <Col span={18} className="chart">
+              <IncomeChart />
+            </Col>
+          </Row>
+        </Col>
+        <Col span={6}>
+          <Row className='home-layout-top'>
+            <Col className='title' span={6}>
+              {titleCircularDouble}
+            </Col>
+            <Col span={18} className="chart">
+              <OrderChart />
+            </Col>
+          </Row>
+        </Col>
+        <Col span={6}>
+          <Row className='home-layout-top'>
+            <Col className='title' span={6}>
+              {titleCircularDouble}
+            </Col>
+            <Col span={18} className="chart">
+              <TargetChart />
+            </Col>
+          </Row>
+        </Col>
+        <Col span={6}>
+          <Row className='home-layout-top'>
+            <Col span={24}>
+              <WelcomeChart />
+            </Col>
+          </Row>
+        </Col>
+      </Row>
+      <Row className='home-layout-mid' gutter={20}>
+        <Col className='mid-prod' span={6}>
+          <ProdIntro />
+        </Col>
+        <Col className='mid-earth' span={12}>
+          <Suspense fallback={<Wait />}>
+            <EarthChart />
+          </Suspense>
+        </Col>
+        <Col className='mid-layer' span={6}>
+          <LayerChart />
+        </Col>
+      </Row>
+    </Card>
   )
 }
