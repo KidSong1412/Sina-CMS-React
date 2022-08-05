@@ -8,7 +8,7 @@ export default function LayerChart () {
         text: '公司层级',
         textStyle: {
           color: '#ffffff',
-          fontSize: '20px'
+          fontSize: '16px'
         }
       },
       textStyle: {
@@ -19,10 +19,10 @@ export default function LayerChart () {
         {
           name: 'Funnel',
           type: 'funnel',
-          left: '10%',
-          bottom: 20,
-          top: 60,
-          width: '80%',
+          left: '18%',
+          bottom: 16,
+          top: 48,
+          width: '64%',
           min: 0,
           max: 100,
           minSize: '0%',
@@ -46,15 +46,15 @@ export default function LayerChart () {
           },
           emphasis: {
             label: {
-              fontSize: 20
+              fontSize: 16
             }
           },
           data: [
-            { value: 60, name: 'Visit' },
-            { value: 40, name: 'Inquiry' },
-            { value: 20, name: 'Order' },
-            { value: 80, name: 'Click' },
-            { value: 100, name: 'Show' }
+            { value: 60, name: 'Minister' },
+            { value: 40, name: 'Leader' },
+            { value: 20, name: 'O' },
+            { value: 80, name: 'Chief Inspector' },
+            { value: 100, name: 'Boss' }
           ]
         }
       ]

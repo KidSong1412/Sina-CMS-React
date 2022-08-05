@@ -8,7 +8,7 @@ export default function IncomeChart () {
         text: '周期收益',
         textStyle: {
           color: '#ffffff',
-          fontSize: '20px'
+          fontSize: '16px'
         }
       },
       xAxis: {
@@ -38,10 +38,10 @@ export default function IncomeChart () {
       ],
       grid: [
         {
-          left: '10px',
-          bottom: '20px',
-          right: '15px',
-          top: '30px'
+          left: '8px',
+          bottom: '16px',
+          right: '12px',
+          top: '24px'
         }
       ]
     }

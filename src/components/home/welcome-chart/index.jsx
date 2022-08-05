@@ -12,7 +12,7 @@ export default function WelcomeChart () {
             top: 'center',
             style: {
               text: 'Welcome To Sina',
-              fontSize: 40,
+              fontSize: 32,
               fontWeight: 'bold',
               lineDash: [0, 200],
               lineDashOffset: 0,

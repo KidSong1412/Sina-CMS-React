@@ -1,41 +1,41 @@
 .header {
-  height: 80px;
+  height: 64px;
   background-color: #fff;
   .header-top {
-    height: 40px;
-    line-height: 40px;
-    padding-right: 30px;
+    height: 32px;
+    line-height: 32px;
+    padding-right: 24px;
     text-align: right;
-    border-bottom: 1px solid #1da57a;
+    border-bottom: 0.8px solid #1da57a;
     span {
-      margin-right: 10px;
+      margin-right: 8px;
     }
   }
   .header-bottom {
-    height: 40px;
+    height: 32px;
     display: flex;
     align-items: center;
     .header-bottom-left {
       position: relative;
-      width: 25%;
+      width: 20%;
       text-align: center;
-      font-size: 20px;
+      font-size: 16px;
       &::after {
         content: '';
         position: absolute;
         right: 50%;
         top: 100%;
         transform: translateX(50%);
-        border-top: 20px solid white;
-        border-right: 20px solid transparent;
-        border-bottom: 20px solid transparent;
-        border-left: 20px solid transparent;
+        border-top: 16px solid white;
+        border-right: 16px solid transparent;
+        border-bottom: 16px solid transparent;
+        border-left: 16px solid transparent;
       }
     }
     .header-bottom-right {
-      width: 75%;
+      width: 60%;
       text-align: right;
-      margin-right: 30px;
+      margin-right: 24px;
     }
   }
 }

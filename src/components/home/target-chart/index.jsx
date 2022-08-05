@@ -8,21 +8,21 @@ export default function TargetChart () {
         text: '小目标',
         textStyle: {
           color: '#ffffff',
-          fontSize: '20px'
+          fontSize: '16px'
         }
       },
       legend: {
         textStyle: {
           color: '#ffffff'
         },
-        right: '15px'
+        right: '12px'
       },
       grid: [
         {
-          left: '10px',
-          bottom: '20px',
-          right: '15px',
-          top: '30px'
+          left: '8px',
+          bottom: '16px',
+          right: '12px',
+          top: '24px'
         }
       ],
       xAxis: {
@@ -43,7 +43,7 @@ export default function TargetChart () {
           name: '已完成',
           type: 'bar',
           stack: 'total',
-          barWidth: 20,
+          barWidth: 16,
           data: [350],
           itemStyle: {
             color: '#45c946'
